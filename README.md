@@ -317,6 +317,20 @@ Special thanks to the `statsmodels` and `scipy` teams for building libraries tha
 
 ---
 
+## 🔗 Related Projects
+
+Looking to master other areas of data science and visualization?
+
+Check out these companion repositories:
+
+- 📊 [PandasPlayground](https://github.com/SatvikPraveen/PandasPlayground): Master pandas with real-world data pipelines and EDA workflows.
+- 🔢 [NumPyMasterPro](https://github.com/SatvikPraveen/NumPyMasterPro): Dive deep into NumPy with structured notebooks, utilities, and broadcasting tricks.
+- 🎨 [MatplotlibMasterPro](https://github.com/SatvikPraveen/MatplotlibMasterPro): Build static and animated visualizations with Matplotlib from scratch.
+- 📘 [SeabornMasterPro](https://github.com/SatvikPraveen/SeabornMasterPro): Learn statistical visualization using Seaborn with layered plots and dashboards.
+- 🌐 [PlotlyVizPro](https://github.com/SatvikPraveen/PlotlyVizPro): Create interactive dashboards using Plotly Express and Graph Objects.
+
+Together, these projects offer a full-stack toolkit for mastering data science workflows.
+
 ### 📜 License
 
 This project is licensed under the **GNU General Public License v3.0**.
