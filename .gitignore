@@ -1,0 +1,65 @@
+# -------------------------------
+# Python & Environment Ignored
+# -------------------------------
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+*.pyo
+*.pyd
+.Python
+*.log
+
+# -------------------------------
+# Jupyter
+# -------------------------------
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# -------------------------------
+# Environments
+# -------------------------------
+env/
+venv/
+sm_env/
+.venv/
+*.env
+.env.*
+
+# VS Code / PyCharm virtual envs
+.idea/
+.vscode/
+
+# -------------------------------
+# OS-Specific
+# -------------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------------
+# Cache & Build
+# -------------------------------
+.cache/
+pytest_cache/
+build/
+dist/
+
+# -------------------------------
+# Ignore Streamlit app cache
+# -------------------------------
+.streamlit/
+
+# -------------------------------
+# Optional: Exported Notebooks (if generated separately)
+# -------------------------------
+# exports/html/
+# exports/pdf/
+
+# -------------------------------
+# Allow everything else
+# -------------------------------
+!*.ipynb
+!*.py
+!*.md
+!requirements.txt
+!README.md
