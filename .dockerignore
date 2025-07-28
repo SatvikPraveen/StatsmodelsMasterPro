@@ -1,0 +1,43 @@
+# Ignore virtual environments
+sm_env/
+.venv/
+
+# Ignore OS + IDE metadata
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.DS_Store
+*.idea/
+*.vscode/
+
+# Ignore notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore test reports and caches
+.coverage
+htmlcov/
+.cache/
+pytest_cache/
+
+# Ignore build artifacts
+build/
+dist/
+*.egg-info/
+
+# Ignore large export/data folders (keep raw CSV if needed)
+exports/
+output/
+plots/
+figures/
+
+# ⚠️ Uncomment below lines only if you don't want to include data files
+# *.csv
+# *.tsv
+# *.xlsx
+# *.parquet
+# *.feather
+# *.h5
+# *.npy
+# *.npz

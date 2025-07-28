@@ -1,0 +1,14 @@
+services:
+  statsmodels_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501" # Streamlit
+      - "8899:8888" # JupyterLab
+    volumes:
+      - .:/app
+    environment:
+      - APP_MODE=jupyter
+      #- APP_MODE=streamlit
+    entrypoint: ["/bin/bash", "./entrypoint.sh"]
