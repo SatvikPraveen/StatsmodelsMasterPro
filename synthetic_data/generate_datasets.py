@@ -328,23 +328,27 @@ def generate_survival_data(n=200):
 def generate_zero_inflated_count_data(n=300):
     """
     Count data with excess zeros for ZIP/ZINB models
+    Multiple predictors: x1, x2 for count model; x3 for inflation model
     """
     np.random.seed(42)
     
-    X = np.random.normal(2, 1, n)
+    # Predictors
+    x1 = np.random.normal(2, 1, n)
+    x2 = np.random.normal(0, 1.5, n)
+    x3 = np.random.normal(-1, 0.8, n)  # Inflation predictor
     
-    # Zero-inflation: 40% structural zeros
-    zero_prob = 0.4
+    # Zero-inflation probability depends on x3
+    zero_prob = 1 / (1 + np.exp(-(-0.5 + 0.7 * x3)))  # Logistic
     structural_zeros = np.random.binomial(1, zero_prob, n)
     
-    # Poisson counts for non-structural zeros
-    lambda_ = np.exp(0.5 + 0.8 * X)
+    # Poisson counts for non-structural zeros (depends on x1, x2)
+    lambda_ = np.exp(0.5 + 0.6 * x1 + 0.3 * x2)
     counts = poisson.rvs(mu=lambda_)
     
     # Apply structural zeros
     y = np.where(structural_zeros == 1, 0, counts)
     
-    df = pd.DataFrame({'X': X, 'y': y})
+    df = pd.DataFrame({'x1': x1, 'x2': x2, 'x3': x3, 'y': y})
     df.to_csv(DATA_PATH / "zero_inflated_count.csv", index=False)
     print("[✔] Zero-inflated count data saved → zero_inflated_count.csv")
 
