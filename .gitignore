@@ -4,11 +4,20 @@
 __pycache__/
 *.py[cod]
 *.so
+*.egg
 *.egg-info/
 *.pyo
 *.pyd
 .Python
 *.log
+*.pot
+*.pyc
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+*.mo
+*.class
 
 # -------------------------------
 # Jupyter
@@ -22,13 +31,25 @@ __pycache__/
 env/
 venv/
 sm_env/
+statsmodels_env/
 .venv/
 *.env
 .env.*
+ENV/
+env.bak/
+venv.bak/
 
 # VS Code / PyCharm virtual envs
 .idea/
 .vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
 
 # -------------------------------
 # OS-Specific
@@ -43,6 +64,21 @@ Thumbs.db
 pytest_cache/
 build/
 dist/
+*.spec
+
+# -------------------------------
+# Data & Temporary Files
+# -------------------------------
+*.tmp
+*.bak
+*.swp
+*.swo
+*.db
+*.sqlite
+*.sqlite3
+.mypy_cache/
+.dmypy.json
+dmypy.json
 
 # -------------------------------
 # Ignore Streamlit app cache

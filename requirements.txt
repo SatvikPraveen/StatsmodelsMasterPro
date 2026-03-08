@@ -13,6 +13,7 @@ streamlit>=1.26
 # Utilities
 scikit-learn>=1.3
 pingouin>=0
+lifelines>=0.27  # Survival analysis (Cox PH, Kaplan-Meier)
 
 # Development / Notebook interface
 jupyterlab>=4.0

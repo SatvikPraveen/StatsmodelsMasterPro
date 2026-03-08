@@ -209,8 +209,240 @@ def generate_posthoc_data(n=100):
     print("[✔] Posthoc analysis data saved → posthoc_dataset.csv")
 
 
+# ---------- 9. Robust Regression Data ----------
+def generate_robust_regression_data(n=200):
+    """
+    Data with outliers and heteroskedasticity for WLS, RLM, Quantile Regression
+    """
+    np.random.seed(42)
+    X = np.random.normal(10, 3, n)
+    
+    # Add heteroskedastic noise
+    noise = np.random.normal(0, 0.5 + 0.3 * np.abs(X), n)
+    y = 5 + 2.5 * X + noise
+    
+    # Inject outliers
+    outlier_idx = np.random.choice(n, size=15, replace=False)
+    y[outlier_idx] += np.random.choice([-30, 30], size=15)
+    
+    # Create weights (inversely proportional to variance)
+    weights = 1 / (0.5 + 0.3 * np.abs(X))
+    
+    df = pd.DataFrame({'X': X, 'y': y, 'weights': weights})
+    df.to_csv(DATA_PATH / "robust_regression_data.csv", index=False)
+    print("[✔] Robust regression data saved → robust_regression_data.csv")
+
+
+# ---------- 10. Seasonal Time Series Data ----------
+def generate_seasonal_ts_data(n=365):
+    """
+    Seasonal time series for SARIMAX
+    """
+    np.random.seed(42)
+    t = np.arange(n)
+    
+    # Trend + Seasonal + Noise
+    trend = 0.05 * t
+    seasonal = 10 * np.sin(2 * np.pi * t / 12)  # Monthly seasonality
+    noise = np.random.normal(0, 2, n)
+    
+    y = 50 + trend + seasonal + noise
+    
+    # External regressor
+    X_external = np.random.normal(5, 1.5, n)
+    
+    df = pd.DataFrame({
+        't': pd.date_range("2020-01-01", periods=n, freq='D'),
+        'y': y,
+        'exog': X_external
+    })
+    df.to_csv(DATA_PATH / "seasonal_ts_data.csv", index=False)
+    print("[✔] Seasonal time series data saved → seasonal_ts_data.csv")
+
+
+# ---------- 11. Panel Data ----------
+def generate_panel_data(n_individuals=50, n_time=10):
+    """
+    Panel data for fixed/random effects models
+    """
+    np.random.seed(42)
+    
+    data = []
+    for i in range(n_individuals):
+        # Individual-specific fixed effect
+        individual_effect = np.random.normal(0, 5)
+        
+        for t in range(n_time):
+            X1 = np.random.normal(10, 2)
+            X2 = np.random.normal(5, 1.5)
+            noise = np.random.normal(0, 1)
+            
+            # y depends on individual effect + X variables
+            y = 10 + individual_effect + 1.5 * X1 - 0.8 * X2 + noise
+            
+            data.append({
+                'individual': f'ID_{i}',
+                'time': t,
+                'X1': X1,
+                'X2': X2,
+                'y': y
+            })
+    
+    df = pd.DataFrame(data)
+    df.to_csv(DATA_PATH / "panel_data.csv", index=False)
+    print("[✔] Panel data saved → panel_data.csv")
+
+
+# ---------- 12. Survival Data ----------
+def generate_survival_data(n=200):
+    """
+    Survival analysis data with censoring
+    """
+    np.random.seed(42)
+    
+    age = np.random.normal(55, 12, n)
+    treatment = np.random.binomial(1, 0.5, n)
+    biomarker = np.random.normal(100, 20, n)
+    
+    # Survival time (exponential distributed)
+    lambda_ = np.exp(-3 + 0.02 * age - 0.5 * treatment + 0.01 * biomarker)
+    time = np.random.exponential(1/lambda_, n)
+    
+    # Censoring (40% censored)
+    censor_time = np.random.uniform(0, 15, n)
+    observed_time = np.minimum(time, censor_time)
+    event = (time <= censor_time).astype(int)
+    
+    df = pd.DataFrame({
+        'age': age,
+        'treatment': treatment,
+        'biomarker': biomarker,
+        'time': observed_time,
+        'event': event
+    })
+    df.to_csv(DATA_PATH / "survival_data.csv", index=False)
+    print("[✔] Survival data saved → survival_data.csv")
+
+
+# ---------- 13. Zero-Inflated Count Data ----------
+def generate_zero_inflated_count_data(n=300):
+    """
+    Count data with excess zeros for ZIP/ZINB models
+    """
+    np.random.seed(42)
+    
+    X = np.random.normal(2, 1, n)
+    
+    # Zero-inflation: 40% structural zeros
+    zero_prob = 0.4
+    structural_zeros = np.random.binomial(1, zero_prob, n)
+    
+    # Poisson counts for non-structural zeros
+    lambda_ = np.exp(0.5 + 0.8 * X)
+    counts = poisson.rvs(mu=lambda_)
+    
+    # Apply structural zeros
+    y = np.where(structural_zeros == 1, 0, counts)
+    
+    df = pd.DataFrame({'X': X, 'y': y})
+    df.to_csv(DATA_PATH / "zero_inflated_count.csv", index=False)
+    print("[✔] Zero-inflated count data saved → zero_inflated_count.csv")
+
+
+# ---------- 14. Multivariate Time Series (VAR) ----------
+def generate_var_data(n=250):
+    """
+    Multivariate time series for VAR models
+    """
+    np.random.seed(42)
+    
+    y1 = np.zeros(n)
+    y2 = np.zeros(n)
+    
+    # VAR(1) process
+    for t in range(1, n):
+        y1[t] = 0.5 * y1[t-1] + 0.2 * y2[t-1] + np.random.normal(0, 1)
+        y2[t] = 0.3 * y1[t-1] + 0.6 * y2[t-1] + np.random.normal(0, 1)
+    
+    df = pd.DataFrame({
+        't': pd.date_range("2020-01-01", periods=n, freq='D'),
+        'y1': y1,
+        'y2': y2
+    })
+    df.to_csv(DATA_PATH / "var_data.csv", index=False)
+    print("[✔] VAR data saved → var_data.csv")
+
+
+# ---------- 15. GEE Data (Correlated) ----------
+def generate_gee_data(n_clusters=50, n_per_cluster=5):
+    """
+    Clustered/repeated measures data for GEE
+    """
+    np.random.seed(42)
+    
+    data = []
+    for cluster in range(n_clusters):
+        # Cluster-specific random effect
+        cluster_effect = np.random.normal(0, 3)
+        
+        for obs in range(n_per_cluster):
+            X = np.random.normal(5, 2)
+            treatment = np.random.binomial(1, 0.5)
+            
+            # Binary outcome with cluster correlation
+            logit = -1 + 0.5 * X + 0.8 * treatment + cluster_effect
+            prob = 1 / (1 + np.exp(-logit))
+            y = np.random.binomial(1, prob)
+            
+            data.append({
+                'cluster': f'C_{cluster}',
+                'observation': obs,
+                'X': X,
+                'treatment': treatment,
+                'y': y
+            })
+    
+    df = pd.DataFrame(data)
+    df.to_csv(DATA_PATH / "gee_data.csv", index=False)
+    print("[✔] GEE data saved → gee_data.csv")
+
+
+# ---------- 16. Mediation Data ----------
+def generate_mediation_data(n=300):
+    """
+    Data for mediation/moderation analysis
+    """
+    np.random.seed(42)
+    
+    # Independent variable
+    X = np.random.normal(0, 1, n)
+    
+    # Mediator (M depends on X)
+    M = 0.7 * X + np.random.normal(0, 0.5, n)
+    
+    # Dependent variable (Y depends on both X and M)
+    Y = 0.4 * X + 0.6 * M + np.random.normal(0, 0.8, n)
+    
+    # Moderator for moderation analysis
+    W = np.random.normal(0, 1, n)
+    Y_moderated = 0.5 * X + 0.3 * W + 0.4 * X * W + np.random.normal(0, 0.8, n)
+    
+    df = pd.DataFrame({
+        'X': X,
+        'M': M,
+        'Y': Y,
+        'W': W,
+        'Y_moderated': Y_moderated
+    })
+    df.to_csv(DATA_PATH / "mediation_data.csv", index=False)
+    print("[✔] Mediation/moderation data saved → mediation_data.csv")
+
+
 # ---------- Master Function ----------
 def generate_all_datasets():
+    print("=" * 50)
+    print("Generating Original Datasets...")
+    print("=" * 50)
     generate_ols_data()
     generate_glm_data()
     generate_time_series_data()
@@ -219,7 +451,22 @@ def generate_all_datasets():
     generate_multivariate_group_data()
     generate_ols_diagnostics_data()
     generate_posthoc_data()
-    print("\n✅ All synthetic datasets generated successfully!")
+    
+    print("\n" + "=" * 50)
+    print("Generating New Advanced Datasets...")
+    print("=" * 50)
+    generate_robust_regression_data()
+    generate_seasonal_ts_data()
+    generate_panel_data()
+    generate_survival_data()
+    generate_zero_inflated_count_data()
+    generate_var_data()
+    generate_gee_data()
+    generate_mediation_data()
+    
+    print("\n" + "=" * 50)
+    print("✅ All synthetic datasets generated successfully!")
+    print("=" * 50)
 
 
 if __name__ == "__main__":

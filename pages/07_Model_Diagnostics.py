@@ -46,7 +46,83 @@ if target and features:
 
     st.subheader("🔴 Cook’s Distance")
     sth.show_cooks_distance(model)
-
+    st.subheader("🧪 Advanced Diagnostic Tests")
+    
+    # Import additional tests
+    from statsmodels.stats.stattools import durbin_watson, jarque_bera
+    from statsmodels.stats.diagnostic import linear_rainbow, linear_reset
+    import scipy.stats as stats
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        # Durbin-Watson Test
+        st.markdown("**🔵 Durbin-Watson Test (Autocorrelation)**")
+        dw_stat = durbin_watson(model.resid)
+        st.metric("DW Statistic", f"{dw_stat:.4f}")
+        
+        if 1.5 < dw_stat < 2.5:
+            st.success("✅ No significant autocorrelation (DW ≈ 2)")
+        elif dw_stat < 1.5:
+            st.warning("⚠️ Positive autocorrelation detected (DW < 1.5)")
+        else:
+            st.warning("⚠️ Negative autocorrelation detected (DW > 2.5)")
+        
+        st.caption("DW ≈ 2: No autocorrelation | DW < 2: Positive | DW > 2: Negative")
+        
+        # Jarque-Bera Test
+        st.markdown("**🟢 Jarque-Bera Test (Normality)**")
+        jb_stat, jb_pval, jb_skew, jb_kurt = jarque_bera(model.resid)
+        
+        col_jb1, col_jb2 = st.columns(2)
+        col_jb1.metric("JB Statistic", f"{jb_stat:.4f}")
+        col_jb2.metric("p-value", f"{jb_pval:.4f}")
+        
+        if jb_pval > 0.05:
+            st.success("✅ Residuals appear normally distributed (p > 0.05)")
+        else:
+            st.warning("⚠️ Residuals deviate from normality (p < 0.05)")
+        
+        st.caption(f"Skewness: {jb_skew:.4f} | Kurtosis: {jb_kurt:.4f}")
+    
+    with col2:
+        # Rainbow Test
+        st.markdown("**🟣 Rainbow Test (Linearity)**")
+        try:
+            rainbow_stat, rainbow_pval = linear_rainbow(model)
+            
+            col_rb1, col_rb2 = st.columns(2)
+            col_rb1.metric("F-statistic", f"{rainbow_stat:.4f}")
+            col_rb2.metric("p-value", f"{rainbow_pval:.4f}")
+            
+            if rainbow_pval > 0.05:
+                st.success("✅ Linear specification appears adequate (p > 0.05)")
+            else:
+                st.warning("⚠️ Possible nonlinearity detected (p < 0.05)")
+            
+            st.caption("Tests whether relationship is truly linear")
+        except Exception as e:
+            st.info(f"Rainbow test unavailable: {str(e)[:50]}")
+        
+        # RESET Test
+        st.markdown("**🟠 RESET Test (Specification)**")
+        try:
+            reset_result = linear_reset(model, power=2)
+            reset_stat = reset_result.fvalue
+            reset_pval = reset_result.pvalue
+            
+            col_rs1, col_rs2 = st.columns(2)
+            col_rs1.metric("F-statistic", f"{reset_stat:.4f}")
+            col_rs2.metric("p-value", f"{reset_pval:.4f}")
+            
+            if reset_pval > 0.05:
+                st.success("✅ Model specification appears correct (p > 0.05)")
+            else:
+                st.warning("⚠️ Misspecification detected - consider polynomials/interactions (p < 0.05)")
+            
+            st.caption("Ramsey RESET test for functional form")
+        except Exception as e:
+            st.info(f"RESET test unavailable: {str(e)[:50]}")
     st.subheader("🚨 Influential Observations")
     influence_df = sth.get_influential_points_df(model, df)
     st.dataframe(influence_df)

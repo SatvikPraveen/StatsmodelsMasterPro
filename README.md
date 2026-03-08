@@ -19,14 +19,99 @@ Instead of relying on real-world noise, this project uses **carefully designed s
 
 ## 🚀 Key Features
 
-✅ 16 concept-focused notebooks  
-✅ Fully synthetic datasets (no domain noise)  
-✅ Complete statistical diagnostics and CI/Bootstrap visualizations  
-✅ Custom fallback implementations (e.g., Hotelling’s T² without Pingouin)  
-✅ Common tests compared with `scipy.stats` (t-test, CI, KS, etc.)  
-✅ Modular utility structure: `utils/` for reuse, `exports/` for outputs  
-✅ Markdown cheatsheet for quick reference  
-✅ Optional Streamlit dashboard support
+✅ **25 Statistical Modules** covering foundational to advanced techniques  
+✅ **18 Synthetic Datasets** carefully designed for each analysis type  
+✅ **Complete Streamlit Dashboard** with 25 interactive pages  
+✅ **Jupyter Notebooks** for in-depth exploration  
+✅ **Production-Ready Code** with proper error handling and diagnostics  
+✅ **Comprehensive Visualizations** for every analysis  
+✅ **Export Functionality** - Download results as CSV  
+✅ **Modular Utilities** - Reusable functions in `utils/`  
+✅ **Comparison Studies** - statsmodels vs scipy.stats  
+✅ **Docker Support** for reproducible environments
+
+---
+
+## 📚 Complete Module List
+
+### 🔹 Foundational Statistics
+1. **Descriptive Statistics** - Summary stats, distributions, correlations
+2. **OLS Regression** - Ordinary Least Squares with diagnostics
+3. **GLM Models** - Poisson, Binomial, Gaussian, Gamma families
+4. **Hypothesis Testing** - t-tests, ANOVA, effect sizes
+
+### 🔹 Time Series Analysis
+5. **Basic Time Series** - ARIMA, ACF/PACF, ADF tests
+6. **Advanced Time Series** ⭐ ENHANCED
+   - SARIMAX (Seasonal ARIMA with exogenous variables)
+   - VAR (Vector Autoregression)
+   - VECM (Vector Error Correction for cointegrated series)
+   - Granger Causality Tests
+
+### 🔹 Multivariate Statistics
+7. **Multivariate Stats** - Hotelling's T², MANOVA
+8. **Model Diagnostics** ⭐ ENHANCED - VIF, residuals, influence, advanced tests
+   - Durbin-Watson (autocorrelation)
+   - Jarque-Bera (normality)
+   - Rainbow Test (linearity)
+   - RESET Test (specification)
+9. **Model Selection** - AIC, BIC, likelihood ratio tests
+
+### 🔹 Advanced Inference
+10. **Inference & Interpretation** - Confidence intervals, standardized coefficients
+11. **Posthoc Tests** - Tukey HSD, Bonferroni corrections
+12. **Bootstrap CI** - Non-parametric confidence intervals
+
+### 🔹 Comparison Studies
+13. **t-test Comparison** - statsmodels vs scipy
+14. **Correlation Comparison** - Different methods compared
+15. **CI Comparison** - Parametric vs bootstrap
+16. **Distribution Simulation** - Monte Carlo demonstrations
+17. **Summary Dashboard** - Overview of all analyses
+
+### 🔹 Advanced Statistical Methods ⭐ ALL NEW
+18. **Robust Regression**
+    - Weighted Least Squares (WLS)
+    - Robust Linear Models (RLM)
+    - Quantile Regression
+    
+19. **Nonparametric Tests**
+    - Mann-Whitney U Test
+    - Wilcoxon Signed-Rank Test
+    - Kruskal-Wallis H Test
+    - Friedman Test
+    
+20. **Power Analysis**
+    - Sample size calculations
+    - Power curves
+    - Effect size determination
+    - t-test, ANOVA, correlation power
+    
+21. **Survival Analysis**
+    - Kaplan-Meier Curves
+    - Log-Rank Tests
+    - Cox Proportional Hazards Models
+    
+22. **Panel Data Analysis**
+    - Pooled OLS
+    - Fixed Effects Models
+    - Random Effects Models
+    
+23. **GEE Models**
+    - Generalized Estimating Equations
+    - Multiple correlation structures
+    - Population-averaged effects
+    
+24. **Mediation & Moderation**
+    - Mediation analysis (Baron & Kenny)
+    - Moderation/Interaction effects
+    - Simple slopes analysis
+
+25. **Zero-Inflated Models** ⭐ NEW
+    - Zero-Inflated Poisson (ZIP)
+    - Zero-Inflated Negative Binomial (ZINB)
+    - Model comparison with standard count models
+    - Handling excess zeros in count data
 
 ---
 
@@ -54,11 +139,53 @@ Perfect for:
 
 By the end, you’ll confidently:
 
+### Core Skills
 - Model linear, logistic, and multivariate data
 - Evaluate assumptions with professional-grade visuals
 - Compare statistical methods between libraries
 - Automate tests and diagnostics for any model
 - Master the internals of `statsmodels` over black-box tools
+
+### Advanced Techniques
+- Handle **outliers and heteroskedasticity** with robust regression
+- Model **seasonal patterns** and **multivariate time series**
+- Analyze **time-to-event** data with survival analysis
+- Work with **panel/longitudinal** data using fixed and random effects
+- Model **correlated data** with GEE
+- Perform **power analysis** for study design
+- Understand **mediation and moderation** effects
+- Apply **nonparametric tests** when assumptions fail
+- Model **excess zeros** with zero-inflated count models
+- Test for **cointegration** and apply VECM
+- Perform **advanced diagnostics** (autocorrelation, linearity, specification)
+
+---
+
+## 📊 Synthetic Datasets
+
+All datasets are carefully constructed to demonstrate specific statistical concepts:
+
+| Dataset | Purpose | Key Features |
+|---------|---------|--------------|
+| `ols_data.csv` | Linear regression | Clean linear relationships |
+| `ols_diagnostics.csv` | Model diagnostics | Outliers, multicollinearity, heteroskedasticity |
+| `glm_poisson.csv` | Count data | Poisson-distributed outcomes |
+| `glm_logistic.csv` | Binary classification | Logistic regression |
+| `arima_series.csv` | Time series | AR/MA processes |
+| `seasonal_ts_data.csv` ⭐ | Seasonal patterns | SARIMAX modeling |
+| `var_data.csv` ⭐ | Multivariate TS | Vector autoregression |
+| `manova_data.csv` | Multivariate analysis | Multiple DVs |
+| `multivariate_group_data.csv` | Group comparisons | Hotelling's T² |
+| `heteroskedastic_data.csv` | Non-constant variance | WLS demonstration |
+| `robust_regression_data.csv` ⭐ | Outliers & heteroskedasticity | RLM, quantile regression |
+| `posthoc_dataset.csv` | Multiple comparisons | Tukey, Bonferroni |
+| `panel_data.csv` ⭐ | Longitudinal | Fixed/random effects |
+| `survival_data.csv` ⭐ | Time-to-event | Censoring, Cox PH |
+| `gee_data.csv` ⭐ | Clustered data | GEE models |
+| `mediation_data.csv` ⭐ | Causal pathways | Mediation/moderation |
+| `zero_inflated_count.csv` ⭐ | Excess zeros | ZIP/ZINB models |
+
+⭐ = New advanced datasets
 
 ---
 
@@ -184,6 +311,107 @@ pip install -r requirements.txt
 ```bash
 pip install -r requirements_dev.txt
 ```
+
+### 🎲 4. Generate Synthetic Datasets
+
+```bash
+cd synthetic_data
+python generate_datasets.py
+cd ..
+```
+
+This will create 16+ CSV files in the `synthetic_data/` folder.
+
+---
+
+## 🚀 Usage
+
+### Option 1: Streamlit Dashboard (Interactive)
+
+Launch the interactive web dashboard:
+
+```bash
+streamlit run Home.py
+```
+
+Then navigate to `http://localhost:8501` in your browser.
+
+**Features:**
+- 24 interactive pages
+- Real-time parameter adjustment
+- Export results as CSV
+- Comprehensive visualizations
+
+### Option 2: Jupyter Notebooks (Deep Dive)
+
+Launch Jupyter Lab for detailed exploration:
+
+```bash
+jupyter lab
+```
+
+Navigate to the `notebooks/` directory and open any `.ipynb` file.
+
+### Option 3: Docker (Reproducible)
+
+Run with Docker for a consistent environment:
+
+```bash
+# Build the image
+docker-compose build
+
+# Run Streamlit mode
+docker-compose up streamlit
+
+# Or run Jupyter mode
+docker-compose up jupyter
+```
+
+---
+
+## 🛠️ Tech Stack
+
+### Core Libraries
+- **statsmodels** 0.14+ - Statistical models and tests
+- **scipy** 1.10+ - Scientific computing
+- **pandas** 2.0+ - Data manipulation
+- **numpy** 1.24+ - Numerical computing
+
+### Visualization
+- **matplotlib** 3.7+ - Plotting
+- **seaborn** 0.12+ - Statistical visualizations
+- **plotly** 5.15+ - Interactive plots
+
+### Advanced Methods
+- **lifelines** 0.27+ - Survival analysis
+- **scikit-learn** 1.3+ - Preprocessing and utilities
+
+### Interfaces
+- **streamlit** 1.26+ - Web dashboard
+- **jupyter lab** 4.0+ - Notebooks
+- **ipython** - Enhanced REPL
+
+---
+
+## 📋 Requirements
+
+**Python Version:** 3.9+
+
+**Key Dependencies:**
+```
+statsmodels>=0.14
+scipy>=1.10
+pandas>=2.0
+numpy>=1.24
+matplotlib>=3.7
+seaborn>=0.12
+streamlit>=1.26
+lifelines>=0.27
+scikit-learn>=1.3
+jupyterlab>=4.0
+```
+
+See `requirements.txt` for complete list.
 
 ---
 
