@@ -18,3 +18,6 @@ lifelines>=0.27  # Survival analysis (Cox PH, Kaplan-Meier)
 # Development / Notebook interface
 jupyterlab>=4.0
 notebook>=7.0
+
+# Optional: For HTML report generation (used in scripts/generate_all_reports.py)
+# pypandoc>=1.13  # Uncomment if you want HTML reports
