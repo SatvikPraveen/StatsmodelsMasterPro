@@ -1,0 +1,93 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "statsmodels-master-pro"
+version = "2.0.0"
+description = "Research-grade statistical modeling, inference, and validation toolkit built on statsmodels"
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+authors = [{ name = "Satvik Praveen", email = "satvikpraveen707@gmail.com" }]
+requires-python = ">=3.10"
+keywords = ["statistics", "statsmodels", "inference", "causal-inference", "bootstrap", "monte-carlo", "reproducibility"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scipy>=1.10",
+    "statsmodels>=0.14",
+    "matplotlib>=3.7",
+    "seaborn>=0.12",
+]
+
+[project.optional-dependencies]
+survival = ["lifelines>=0.27"]
+app = ["streamlit>=1.26", "plotly>=5.15", "scikit-learn>=1.3", "pingouin>=0.5"]
+notebooks = ["jupyterlab>=4.0", "notebook>=7.0", "nbformat>=5.9", "nbclient>=0.9", "ipykernel>=6.25"]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.4",
+    "lifelines>=0.27",
+    "nbformat>=5.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/SatvikPraveen/StatsmodelsMasterPro"
+Repository = "https://github.com/SatvikPraveen/StatsmodelsMasterPro"
+Issues = "https://github.com/SatvikPraveen/StatsmodelsMasterPro/issues"
+
+[tool.setuptools]
+packages = ["utils", "streamlit_app", "streamlit_app.utils", "synthetic_data"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+    "slow: long-running Monte Carlo or bootstrap tests (deselect with -m 'not slow')",
+    "survival: tests that require the optional lifelines dependency",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::FutureWarning",
+]
+
+[tool.coverage.run]
+source = ["utils"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+extend-exclude = ["notebooks", "common_tests", "exports", "sm_env"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "NPY"]
+ignore = ["E501", "B008", "B905", "UP007"]
+
+[tool.ruff.lint.per-file-ignores]
+"pages/*" = ["E402", "F401", "B007", "I001", "UP", "NPY002", "F841", "F811", "E741", "B006", "B011"]
+"scripts/*" = ["E402", "F401", "I001", "UP", "NPY002", "B007", "F841", "E741"]
+"streamlit_app/*" = ["E402", "F401", "I001", "UP", "NPY002", "F841", "B007"]
+"synthetic_data/generate_datasets.py" = ["NPY002", "I001", "UP"]
+"Home.py" = ["E402", "I001"]
+"utils/compare_models.py" = ["I001", "UP"]
+"utils/diagnostics.py" = ["I001", "UP", "F841"]
+"utils/model_utils.py" = ["I001", "UP", "F811"]
+"utils/visual_utils.py" = ["I001", "UP"]
+"utils/mixed_effects_utils.py" = ["I001", "UP"]
+"tests/*" = ["NPY002"]
