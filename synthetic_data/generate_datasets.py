@@ -2,7 +2,7 @@
 
 import numpy as np
 import pandas as pd
-from scipy.stats import norm, poisson, bernoulli, multivariate_normal
+from scipy.stats import poisson, bernoulli, multivariate_normal
 from pathlib import Path
 
 # Create output path

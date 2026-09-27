@@ -56,6 +56,7 @@ addopts = "-ra --strict-markers"
 markers = [
     "slow: long-running Monte Carlo or bootstrap tests (deselect with -m 'not slow')",
     "survival: tests that require the optional lifelines dependency",
+    "app: headless Streamlit dashboard smoke tests (require the app extra)",
 ]
 filterwarnings = [
     "ignore::DeprecationWarning",
@@ -90,4 +91,4 @@ ignore = ["E501", "B008", "B905", "UP007"]
 "utils/model_utils.py" = ["I001", "UP", "F811"]
 "utils/visual_utils.py" = ["I001", "UP"]
 "utils/mixed_effects_utils.py" = ["I001", "UP"]
-"tests/*" = ["NPY002"]
+"tests/*" = ["NPY002", "E402"]
