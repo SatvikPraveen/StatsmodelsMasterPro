@@ -416,3 +416,31 @@ docs/
 **Last Updated:** March 9, 2026  
 **Total Scripts:** 15  
 **Total Lines:** ~3,500+
+
+---
+
+## 🔬 Reproducibility & Validation (v2.0)
+
+### `build_manifest.py`
+Writes `synthetic_data/MANIFEST.json` with the SHA-256 hash, byte size, row count, and column list of every dataset, keyed to `synthetic_data/dgp_registry.py`.
+
+```bash
+python3 scripts/build_manifest.py
+```
+
+### `verify_manifest.py`
+Checks every CSV against the manifest. `--regenerate` additionally re-runs the generator in a temporary directory and confirms the output is byte-for-byte identical. Exit status 1 on any mismatch (used in CI).
+
+```bash
+python3 scripts/verify_manifest.py --regenerate
+```
+
+### `generate_data_dictionary.py`
+Renders `docs/DATA_DICTIONARY.md` (DGP equations, column definitions, true parameters, hashes) from the registry.
+
+### `parameter_recovery.py`
+Fits the intended model to each dataset and reports whether the true DGP parameters fall inside the 95% confidence intervals. Writes `exports/tables/validation/parameter_recovery.{csv,md}`. `--strict` exits non-zero if any expected parameter is missed with |z| ≥ 3.
+
+```bash
+python3 scripts/parameter_recovery.py --strict
+```

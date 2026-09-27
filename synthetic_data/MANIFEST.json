@@ -1,0 +1,230 @@
+{
+  "generated": "2026-09-27",
+  "generator_script": "synthetic_data/generate_datasets.py",
+  "datasets": {
+    "ols_data.csv": {
+      "registry_key": "ols_data",
+      "sha256": "f0df2e1ca104a7ce8502d6b281368b5fdfbb71e1fd52f6bbc3e8216fe18a3385",
+      "bytes": 11106,
+      "rows": 200,
+      "columns": [
+        "X1",
+        "X2",
+        "y"
+      ],
+      "generator": "generate_ols_data"
+    },
+    "glm_poisson.csv": {
+      "registry_key": "glm_poisson",
+      "sha256": "dcd1dd7f61e8f56f1466a1cb6f9abd779a3ec05763c7114bd467e9505947a7c2",
+      "bytes": 6364,
+      "rows": 300,
+      "columns": [
+        "X",
+        "y"
+      ],
+      "generator": "generate_glm_data"
+    },
+    "glm_logistic.csv": {
+      "registry_key": "glm_logistic",
+      "sha256": "1f8b0836792b8e7d7552e30e7f7e155dc6ebabdce81c5d9218cc399a87113c07",
+      "bytes": 6527,
+      "rows": 300,
+      "columns": [
+        "X",
+        "y"
+      ],
+      "generator": "generate_glm_data"
+    },
+    "arima_series.csv": {
+      "registry_key": "arima_series",
+      "sha256": "d43cad500dd60ba7221dcbc63576e15c74d65dd3782d9642dfe28b14b6ef5be9",
+      "bytes": 7533,
+      "rows": 250,
+      "columns": [
+        "t",
+        "value"
+      ],
+      "generator": "generate_time_series_data"
+    },
+    "manova_data.csv": {
+      "registry_key": "manova_data",
+      "sha256": "001a4ccd767490d52ce7d51b9a242d7c6a8cd72524f7f399d23f4cc046f5b13b",
+      "bytes": 12112,
+      "rows": 300,
+      "columns": [
+        "Y1",
+        "Y2",
+        "group"
+      ],
+      "generator": "generate_manova_data"
+    },
+    "heteroskedastic_data.csv": {
+      "registry_key": "heteroskedastic_data",
+      "sha256": "ad1a4cfedb8dcfeef7b6a348f48b5e52ba03a475e41d333e574b0ecdda95b6f4",
+      "bytes": 7659,
+      "rows": 200,
+      "columns": [
+        "X",
+        "y"
+      ],
+      "generator": "generate_heteroskedastic_data"
+    },
+    "multivariate_group_data.csv": {
+      "registry_key": "multivariate_group_data",
+      "sha256": "46dcbd5615ef0c816f1ddcca8f6c6e752695c65d7ecb17b785af02803211bf5b",
+      "bytes": 113570,
+      "rows": 1000,
+      "columns": [
+        "Num1",
+        "Num2",
+        "Num3",
+        "Num4",
+        "Num5",
+        "Group",
+        "Cat1",
+        "Cat2",
+        "Cat3",
+        "Cat4",
+        "Cat5"
+      ],
+      "generator": "generate_multivariate_group_data"
+    },
+    "ols_diagnostics.csv": {
+      "registry_key": "ols_diagnostics",
+      "sha256": "f42daa4787895a16259640d7d3adf30020f3983a66c36ae1484ba0ef26abdca2",
+      "bytes": 124359,
+      "rows": 600,
+      "columns": [
+        "X1",
+        "X2",
+        "X3",
+        "X4",
+        "X5",
+        "X6",
+        "X7",
+        "X8",
+        "X9",
+        "X10",
+        "y"
+      ],
+      "generator": "generate_ols_diagnostics_data"
+    },
+    "posthoc_dataset.csv": {
+      "registry_key": "posthoc_dataset",
+      "sha256": "b33d8b8d0057b9fa327c88c47967795485d1c6cab0fd9c971f019f725bb685b8",
+      "bytes": 6030,
+      "rows": 300,
+      "columns": [
+        "Group",
+        "Score"
+      ],
+      "generator": "generate_posthoc_data"
+    },
+    "robust_regression_data.csv": {
+      "registry_key": "robust_regression_data",
+      "sha256": "f59d3da2588a981eebfafc18e9e144aa1bda01a5005398153ad86b91d31485bc",
+      "bytes": 11263,
+      "rows": 200,
+      "columns": [
+        "X",
+        "y",
+        "weights"
+      ],
+      "generator": "generate_robust_regression_data"
+    },
+    "seasonal_ts_data.csv": {
+      "registry_key": "seasonal_ts_data",
+      "sha256": "9e5b804d63fec0c15c2ff1a88ed10e1ddd22a776d750bec3ba0395006a80b08b",
+      "bytes": 17251,
+      "rows": 365,
+      "columns": [
+        "t",
+        "y",
+        "exog"
+      ],
+      "generator": "generate_seasonal_ts_data"
+    },
+    "panel_data.csv": {
+      "registry_key": "panel_data",
+      "sha256": "8be96865a9711655ed25121c653f6cbbf11d696bdb2e89889bf2907dae72d906",
+      "bytes": 31456,
+      "rows": 500,
+      "columns": [
+        "individual",
+        "time",
+        "X1",
+        "X2",
+        "y"
+      ],
+      "generator": "generate_panel_data"
+    },
+    "survival_data.csv": {
+      "registry_key": "survival_data",
+      "sha256": "ddfe8023abd082cce241c3212130582e3b58e00c8bf7e79a47b0df026313b378",
+      "bytes": 11879,
+      "rows": 200,
+      "columns": [
+        "age",
+        "treatment",
+        "biomarker",
+        "time",
+        "event"
+      ],
+      "generator": "generate_survival_data"
+    },
+    "zero_inflated_count.csv": {
+      "registry_key": "zero_inflated_count",
+      "sha256": "b95cb346cfc0dde0e89b52d69144cffd3154a648de967dca61be6c6f9c1e737b",
+      "bytes": 18074,
+      "rows": 300,
+      "columns": [
+        "x1",
+        "x2",
+        "x3",
+        "y"
+      ],
+      "generator": "generate_zero_inflated_count_data"
+    },
+    "var_data.csv": {
+      "registry_key": "var_data",
+      "sha256": "b9d6525d9f4ac24e1f2949b90ff30c0ed7416a21be8a72a7445cc77e086427ef",
+      "bytes": 12500,
+      "rows": 250,
+      "columns": [
+        "t",
+        "y1",
+        "y2"
+      ],
+      "generator": "generate_var_data"
+    },
+    "gee_data.csv": {
+      "registry_key": "gee_data",
+      "sha256": "c81887a7822e1f4104468c405f012b49f2346f65b17fd9467be39b6de5723427",
+      "bytes": 7283,
+      "rows": 250,
+      "columns": [
+        "cluster",
+        "observation",
+        "X",
+        "treatment",
+        "y"
+      ],
+      "generator": "generate_gee_data"
+    },
+    "mediation_data.csv": {
+      "registry_key": "mediation_data",
+      "sha256": "dcfaa8c5421ce2cb889f956a6323789279443010b17ba507a03971cf559e9922",
+      "bytes": 29456,
+      "rows": 300,
+      "columns": [
+        "X",
+        "M",
+        "Y",
+        "W",
+        "Y_moderated"
+      ],
+      "generator": "generate_mediation_data"
+    }
+  }
+}
