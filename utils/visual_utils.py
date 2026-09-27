@@ -87,7 +87,7 @@ def plot_scatter_with_trend(df, x, y, method="reg"):
 def plot_ci_errorbar(df, x_col, y_col, ci=95, title="Confidence Intervals"):
     """Plots mean with confidence intervals using seaborn."""
     plt.figure(figsize=(6, 4))
-    sns.pointplot(data=df, x=x_col, y=y_col, ci=ci, capsize=0.2)
+    sns.pointplot(data=df, x=x_col, y=y_col, errorbar=('ci', ci), capsize=0.2)
     plt.title(title)
     plt.tight_layout()
     plt.show()
@@ -95,7 +95,7 @@ def plot_ci_errorbar(df, x_col, y_col, ci=95, title="Confidence Intervals"):
 
 def plot_ci_barplot(df, x_col, y_col, ci=95, title="Barplot with CI"):
     plt.figure(figsize=(6, 4))
-    sns.barplot(data=df, x=x_col, y=y_col, ci=ci, capsize=0.1)
+    sns.barplot(data=df, x=x_col, y=y_col, errorbar=('ci', ci), capsize=0.1)
     plt.title(title)
     plt.tight_layout()
     plt.show()

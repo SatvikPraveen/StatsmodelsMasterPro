@@ -219,10 +219,6 @@ StatsmodelsMasterPro/
 
 ---
 
-Perfect — let’s replace the demo image placeholders with actual **local plot references** using relative paths from within your `README.md`. Here's a clean markdown block you can directly **copy-paste** into your `README.md`, assuming you've placed your images in the `exports/plots/` folder.
-
----
-
 ## 📁 Visual Preview
 
 Following are some of the plots from the project.
@@ -272,7 +268,7 @@ Follow these steps to set up your local development environment:
 ### 🔧 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/StatsmodelsMasterPro.git
+git clone https://github.com/SatvikPraveen/StatsmodelsMasterPro.git
 cd StatsmodelsMasterPro
 ```
 

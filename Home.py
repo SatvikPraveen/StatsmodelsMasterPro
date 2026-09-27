@@ -12,7 +12,7 @@ st.markdown("#### 🧠 Master Statistical Modeling with Clarity, Confidence, and
 
 # --- Intro Section
 st.markdown("""
-Welcome to **StatsmodelsMasterPro** — an interactive, portfolio-ready project designed to help you **learn, revise, and apply statistical modeling using Python's `statsmodels` library`.  
+Welcome to **StatsmodelsMasterPro** — an interactive, portfolio-ready project designed to help you **learn, revise, and apply statistical modeling using Python's `statsmodels` library.  
 
 This project emphasizes:
 - ✅ Clean, **synthetic data** to remove real-world noise.

@@ -1,19 +1,32 @@
 # streamlit_app/utils/st_helpers.py
+"""Shared helpers for the Streamlit dashboard pages."""
 
-import pandas as pd
-import numpy as np
+import tempfile
+from pathlib import Path
+
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import seaborn as sns
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
+import statsmodels.stats.api as sms
+import statsmodels.stats.outliers_influence as influence
 import streamlit as st
 from scipy import stats
-from pathlib import Path
-from scipy.stats import ttest_ind, mannwhitneyu, kruskal
+from scipy.stats import chi2, kruskal, mannwhitneyu, pearsonr, spearmanr, ttest_ind
+from scipy.stats import ttest_ind as sp_ttest_ind
+from statsmodels.graphics.gofplots import qqplot
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
 from statsmodels.stats.outliers_influence import variance_inflation_factor
-import numpy as np
-import statsmodels.stats.api as sms
+from statsmodels.stats.weightstats import ttest_ind as sm_ttest_ind
+from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.tsa.stattools import acf, adfuller, pacf
+
+try:  # optional dependency used by the correlation comparison page
+    import pingouin as pg
+except ImportError:  # pragma: no cover
+    pg = None
 
 # === File Paths ===
 SYN_DATA_PATH = Path("synthetic_data/ols_data.csv")
@@ -89,24 +102,9 @@ def show_model_summary(model):
     st.text(model.summary())
 
 
-def plot_residuals(model):
-    fig, ax = plt.subplots()
-    sns.residplot(x=model.fittedvalues, y=model.resid, lowess=True, ax=ax)
-    ax.set_xlabel("Fitted")
-    ax.set_ylabel("Residuals")
-    ax.set_title("Residuals vs Fitted")
-    st.pyplot(fig)
-
-
 # ========================
 # 📊 Hypothesis Testing
 # ========================
-def run_ttest_ind(df, col, group_col):
-    groups = df[group_col].unique()
-    g1 = df[df[group_col] == groups[0]][col]
-    g2 = df[df[group_col] == groups[1]][col]
-    t_stat, p_value = stats.ttest_ind(g1, g2)
-    return t_stat, p_value
 
 
 def run_anova(df, response, group):
@@ -161,11 +159,6 @@ def display_glm_coefficients(model):
         "0.975]": "{:.4f}"
     }))
 
-
-import matplotlib.pyplot as plt
-import seaborn as sns
-import streamlit as st
-import numpy as np
 
 def plot_glm_predictions(model, df, response_col):
     predicted = model.fittedvalues
@@ -305,7 +298,6 @@ def display_ttest_result(t_stat, p_value, use_welch=False):
     st.markdown(f"**p-value:** `{p_value:.4f}`")
 
 
-
 def display_anova_table(anova_result):
     """Display formatted ANOVA table."""
     st.dataframe(anova_result.style.format(precision=4))
@@ -314,8 +306,6 @@ def display_anova_table(anova_result):
 # ========================
 # ⏱ Time Series Utilities
 # ========================
-from statsmodels.tsa.stattools import adfuller, acf, pacf
-from statsmodels.tsa.arima.model import ARIMA
 
 def check_stationarity(series, alpha=0.05):
     """ADF test for stationarity"""
@@ -358,8 +348,6 @@ def plot_forecast(series, model, steps=10):
 # ========================
 # 🎯 Multivariate Statistics Helpers
 # ========================
-from scipy.stats import chi2
-import numpy as np
 
 def compute_hotelling_t2(group1_df, group2_df, cols):
     """
@@ -394,14 +382,7 @@ def show_multivariate_distributions(df, cols):
 # ========================
 # 🩺 Model Diagnostics Helpers
 # ========================
-import statsmodels.stats.outliers_influence as influence
-from statsmodels.graphics.gofplots import qqplot
 
-def plot_qq(model):
-    """Q–Q plot of residuals."""
-    fig = qqplot(model.resid, line="s")
-    plt.title("Q–Q Plot of Residuals")
-    st.pyplot(fig)
 
 def plot_leverage(model):
     """Leverage vs Residual Squared plot."""
@@ -478,8 +459,6 @@ def plot_ci_intervals(ci_df, title="Confidence Intervals"):
 # ========================
 # 🧪 Posthoc Analysis Helpers
 # ========================
-from statsmodels.stats.multicomp import pairwise_tukeyhsd
-import pingouin as pg
 
 def run_tukey_hsd(df, response, group):
     """Perform Tukey HSD test and return result DataFrame."""
@@ -495,8 +474,6 @@ def run_pairwise_tests(df, response, group):
 # ========================
 # 🔁 Shared Comparison Helpers (T-test)
 # ========================
-from statsmodels.stats.weightstats import ttest_ind as sm_ttest_ind
-from scipy.stats import ttest_ind as sp_ttest_ind
 
 def compare_ttests(df, col, group_col):
     groups = df[group_col].unique()
@@ -518,10 +495,7 @@ def compare_ttests(df, col, group_col):
 # ========================
 # 🔁 Shared Comparison Helpers (Correlation)
 # ========================
-from scipy.stats import pearsonr, spearmanr
-import statsmodels.api as sm
 
-from scipy.stats import pearsonr, spearmanr
 
 def compare_correlations(df, col1, col2):
     # Statsmodels-style Pearson (using pandas corr)
@@ -550,9 +524,6 @@ def compare_correlations(df, col1, col2):
 # ========================
 # 📏 Confidence Interval Comparison
 # ========================
-import statsmodels.stats.api as sms
-from scipy import stats
-import numpy as np
 
 def get_confidence_interval_statsmodels(data, alpha=0.05):
     """
@@ -611,8 +582,6 @@ def get_bootstrap_ci_numpy(data, alpha=0.05, reps=1000, seed=42):
 # ========================
 # 🧪 Distribution Simulation Utilities
 # ========================
-from scipy import stats
-import numpy as np
 
 def simulate_distribution(dist_name, params, size=1000, random_state=None):
     rng = np.random.default_rng(random_state)
@@ -644,7 +613,6 @@ def simulate_distribution(dist_name, params, size=1000, random_state=None):
         data = dist.rvs(size=size)
 
     return data, dist
-
 
 
 def plot_distribution_histogram(data, dist_name, bins=30):
@@ -686,9 +654,6 @@ def display_random_sample(df, n=5):
 # ========================
 # 📊 Additional Utilities
 # ========================
-import statsmodels.api as sm
-import matplotlib.pyplot as plt
-import streamlit as st
 
 def plot_qq(model):
     """Plot Q–Q plot of residuals for normality check."""
@@ -703,7 +668,6 @@ def plot_influence(model):
     sm.graphics.influence_plot(model, ax=ax, criterion="cooks")
     st.pyplot(fig)
 
-import tempfile
 
 def export_model_summary(model):
     """Exports the model summary as a downloadable .txt file."""
@@ -721,8 +685,6 @@ def export_model_summary(model):
             mime="text/plain"
         )
 
-import pandas as pd
-import tempfile
 
 def export_coefficients(model):
     """Export model coefficients and stats as downloadable CSV."""
@@ -770,9 +732,6 @@ def get_predictions_df(model, df, response_col):
     return df_pred
 
 
-from scipy.stats import ttest_ind
-import statsmodels.api as sm
-
 def run_ttest_ind(df, col, group_col, equal_var=True):
     group_vals = df[group_col].dropna().unique()
     g1 = df[df[group_col] == group_vals[0]][col].dropna()
@@ -795,8 +754,6 @@ def compute_eta_squared(model):
 
 
 # 🔹 1. Mann–Whitney U Test (Independent Samples)
-from scipy.stats import mannwhitneyu
-import numpy as np
 
 def run_mannwhitney_u(df, value_col, group_col):
     """Run Mann–Whitney U Test and compute Cliff's Delta."""
@@ -832,7 +789,6 @@ def display_u_test_result(u_stat, p_val):
         st.info("ℹ️ No significant difference detected between groups.")
 
 # 2. Kruskal–Wallis H Test (Independent Groups >2)
-from scipy.stats import kruskal
 
 def run_kruskal(df, value_col, group_col):
     """Run Kruskal–Wallis H Test and compute η² effect size."""
@@ -857,8 +813,6 @@ def display_kruskal_result(h_stat, p_val):
 
 
 # 🔬 3. Tukey’s HSD Posthoc Test (After ANOVA)
-from statsmodels.stats.multicomp import pairwise_tukeyhsd
-import matplotlib.pyplot as plt
 
 def run_tukey_test(df, value_col, group_col):
     """Run Tukey’s HSD and return result DataFrame + compact plot."""
@@ -941,31 +895,7 @@ def get_standardized_coefficients(df, target, predictors):
     })
 
 
-def get_bootstrap_ci_statsmodels(data, alpha=0.05, reps=1000):
-    """
-    Compute bootstrap confidence interval using statsmodels.
-
-    Parameters:
-        data (array-like): Input numeric data.
-        alpha (float): Significance level (1 - confidence level).
-        reps (int): Number of bootstrap samples.
-
-    Returns:
-        tuple: (lower_bound, upper_bound) of confidence interval.
-    """
-    if len(data) < 10:
-        raise ValueError("Bootstrap CI requires at least 10 data points.")
-
-    ci_bounds = sms.DescrStatsW(data).bootstrap(
-        reps=reps,
-        method='percentile',
-        alpha=alpha,
-        func=np.mean
-    )
-    return ci_bounds[0], ci_bounds[1]
-
-
-def get_bootstrap_ci_statsmodels(data, alpha=0.05, reps=1000):
+def get_bootstrap_ci_statsmodels(data, alpha=0.05, reps=1000, seed=42):
     """
     Emulates bootstrap confidence interval (mean) similar to statsmodels,
     using manual resampling and percentile method.
@@ -983,7 +913,7 @@ def get_bootstrap_ci_statsmodels(data, alpha=0.05, reps=1000):
 
     data = np.asarray(data, dtype=np.float64)
 
-    rng = np.random.default_rng()
+    rng = np.random.default_rng(seed)
     boot_means = rng.choice(data, size=(reps, len(data)), replace=True).mean(axis=1)
 
     lower = np.percentile(boot_means, 100 * (alpha / 2))

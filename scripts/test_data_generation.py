@@ -152,11 +152,11 @@ def validate_all_datasets():
     ]
     
     optional_datasets = [
-        ("gee_data.csv", ["id", "time", "y"]),
+        ("gee_data.csv", ["cluster", "observation", "X", "treatment", "y"]),
         ("mediation_data.csv", ["X", "M", "Y"]),
         ("survival_data.csv", ["time", "event"]),
         ("var_data.csv", ["t", "y1", "y2"]),
-        ("zero_inflated_count.csv", ["X", "count"]),
+        ("zero_inflated_count.csv", ["x1", "x2", "x3", "y"]),
     ]
     
     print("\n📊 Core Datasets")

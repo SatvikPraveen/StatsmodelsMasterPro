@@ -40,14 +40,6 @@ def summarize_model_coefficients(model):
     return summary_df
 
 
-def export_model_summary_as_text(model, filepath: Path):
-    """
-    Save the model's summary output to a `.txt` file.
-    """
-    with open(filepath, "w") as f:
-        f.write(model.summary().as_text())
-
-
 def extract_anova_table(model, typ=2):
     """
     Returns the ANOVA table for a fitted model.
