@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "StatsmodelsMasterPro: research-grade statistical modeling, inference, and validation with statsmodels"
+version: 2.0.0
+date-released: 2026-09-27
+license: GPL-3.0-or-later
+repository-code: "https://github.com/SatvikPraveen/StatsmodelsMasterPro"
+authors:
+  - family-names: Praveen
+    given-names: Satvik
+    email: satvikpraveen707@gmail.com
+keywords:
+  - statistics
+  - statsmodels
+  - bootstrap
+  - causal inference
+  - Monte Carlo
+  - reproducibility
+abstract: >-
+  A validated toolkit layered on statsmodels providing resampling and robust
+  inference, effect sizes, causal inference estimators, mediation and moderation,
+  an ADEMP-style Monte Carlo framework with Monte Carlo standard errors, model
+  selection, time-series evaluation, survival helpers, and publication-ready
+  reporting, together with seventeen seeded synthetic datasets whose true
+  parameters are recorded and continuously checked by a parameter-recovery study.

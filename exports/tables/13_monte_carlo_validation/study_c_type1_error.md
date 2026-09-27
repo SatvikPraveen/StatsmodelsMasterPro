@@ -1,0 +1,6 @@
+| scenario | test | type_I_error | mcse | within_MC_noise_of_0.05 |
+|---|---|---|---|---|
+| small n, small sd | pooled t | 0.0040 | 0.0028 | False |
+| small n, small sd | Welch t | 0.0440 | 0.0092 | True |
+| small n, large sd | pooled t | 0.2120 | 0.0183 | False |
+| small n, large sd | Welch t | 0.0620 | 0.0108 | True |

@@ -1,0 +1,7 @@
+n,method,true,mean_estimate,bias,coverage,coverage_mcse
+20,percentile bootstrap,1.6487,1.6206,-0.0282,0.8100,0.0277
+20,t-interval,1.6487,1.6206,-0.0282,0.8500,0.0252
+50,percentile bootstrap,1.6487,1.6549,0.0062,0.9000,0.0212
+50,t-interval,1.6487,1.6549,0.0062,0.9050,0.0207
+200,percentile bootstrap,1.6487,1.6412,-0.0075,0.8950,0.0217
+200,t-interval,1.6487,1.6412,-0.0075,0.9000,0.0212

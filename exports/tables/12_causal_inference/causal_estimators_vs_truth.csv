@@ -1,0 +1,11 @@
+design,estimator,true_effect,estimate,ci_low,ci_high,bias,covered
+selection on observables,naive difference,2.0000,2.5615,,,0.5615,False
+selection on observables,"IPW (ATE, stabilised)",2.0000,2.0674,1.8715,2.2634,0.0674,True
+selection on observables,IPW (ATT),2.0000,2.0372,1.8241,2.2504,0.0372,True
+selection on observables,1:1 caliper matching (ATT),2.0000,1.9712,1.7817,2.1607,-0.0288,True
+DiD,cross-sectional post-period,3.0000,3.4156,,,0.4156,False
+DiD,before/after treated,3.0000,3.5465,,,0.5465,False
+DiD,difference-in-differences,3.0000,3.1467,2.8114,3.4819,0.1467,True
+unmeasured confounding + instrument,OLS,1.0000,2.0448,,,1.0448,False
+unmeasured confounding + instrument,2SLS,1.0000,0.9573,0.8535,1.0612,-0.0427,True
+regression discontinuity,local linear (rule-of-thumb h),2.0000,1.9892,1.8784,2.1001,-0.0108,True
