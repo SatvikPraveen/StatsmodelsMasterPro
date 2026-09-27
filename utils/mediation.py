@@ -99,7 +99,7 @@ def mediation_statsmodels(df: pd.DataFrame, x: str, m: str, y: str, covariates: 
     from statsmodels.stats.mediation import Mediation
 
     if seed is not None:
-        np.random.seed(seed)
+        np.random.seed(seed)  # noqa: NPY002 - statsmodels Mediation uses the global RNG
     outcome_model = sm.OLS.from_formula(f"{y} ~ {_rhs(x, m, covariates=covariates)}", data=df)
     mediator_model = sm.OLS.from_formula(f"{m} ~ {_rhs(x, covariates=covariates)}", data=df)
     res = Mediation(outcome_model, mediator_model, x, m).fit(n_rep=n_rep)

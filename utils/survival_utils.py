@@ -18,7 +18,6 @@ import numpy as np
 import pandas as pd
 
 try:
-    import lifelines
     from lifelines import (
         CoxPHFitter,
         ExponentialFitter,
@@ -53,8 +52,8 @@ def kaplan_meier_table(df: pd.DataFrame, duration: str, event: str, group: str |
         ci = km.confidence_interval_
         lo = np.interp(eval_times, ci.index, ci.iloc[:, 0])
         hi = np.interp(eval_times, ci.index, ci.iloc[:, 1])
-        for t, s, l, h in zip(eval_times, surv, lo, hi):
-            rows.append({"group": name, "time": float(t), "survival": float(s), "ci_low": float(l), "ci_high": float(h), "median_survival": float(km.median_survival_time_), "n": len(sub), "events": int(sub[event].sum())})
+        for t, s, lo_t, hi_t in zip(eval_times, surv, lo, hi):
+            rows.append({"group": name, "time": float(t), "survival": float(s), "ci_low": float(lo_t), "ci_high": float(hi_t), "median_survival": float(km.median_survival_time_), "n": len(sub), "events": int(sub[event].sum())})
     return pd.DataFrame(rows)
 
 

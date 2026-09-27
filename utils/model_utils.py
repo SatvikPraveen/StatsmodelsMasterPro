@@ -5,9 +5,9 @@ import statsmodels.api as sm
 from pathlib import Path
 import statsmodels.formula.api as smf
 import numpy as np
-from scipy.stats import kstest, norm
+from scipy.stats import kstest
 from scipy.stats import pearsonr, spearmanr, kendalltau
-from typing import Tuple, List
+from typing import Tuple
 from scipy.stats import f
 
 
@@ -96,12 +96,13 @@ def run_kstest_normality(series):
     stat, pval = kstest(standardized, 'norm')
     return stat, pval
 
-def generate_normal_and_skewed_data(n=100):
+def generate_normal_and_skewed_data(n=100, seed=None):
     """
     Generate one normally distributed and one skewed dataset.
     """
-    normal = np.random.normal(loc=0, scale=1, size=n)
-    skewed = np.random.exponential(scale=1, size=n)
+    rng = np.random.default_rng(seed)
+    normal = rng.normal(loc=0, scale=1, size=n)
+    skewed = rng.exponential(scale=1, size=n)
     return pd.DataFrame({'normal': normal, 'skewed': skewed})
 
 
@@ -113,7 +114,7 @@ def compute_correlations(df, col1, col2):
     pearson_corr, pearson_p = pearsonr(df[col1], df[col2])
     spearman_corr, spearman_p = spearmanr(df[col1], df[col2])
     kendall_corr, kendall_p = kendalltau(df[col1], df[col2])
-    
+
     return pd.DataFrame({
         "method": ["Pearson", "Spearman", "Kendall"],
         "correlation": [pearson_corr, spearman_corr, kendall_corr],
@@ -131,9 +132,10 @@ def fit_ols_model(formula, df):
     return sm.OLS.from_formula(formula, data=df).fit()
 
 
-def bootstrap_mean_ci(data: np.ndarray, n_bootstrap: int = 1000, ci: float = 95) -> Tuple[float, float]:
+def bootstrap_mean_ci(data: np.ndarray, n_bootstrap: int = 1000, ci: float = 95, seed=None) -> Tuple[float, float]:
     """Return bootstrap confidence interval for the mean."""
-    means = [np.mean(np.random.choice(data, size=len(data), replace=True)) for _ in range(n_bootstrap)]
+    rng = np.random.default_rng(seed)
+    means = [np.mean(rng.choice(data, size=len(data), replace=True)) for _ in range(n_bootstrap)]
     lower = np.percentile(means, (100 - ci) / 2)
     upper = np.percentile(means, 100 - (100 - ci) / 2)
     return lower, upper

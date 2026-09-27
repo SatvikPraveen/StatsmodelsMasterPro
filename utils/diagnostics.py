@@ -66,7 +66,7 @@ def plot_acf_pacf(series, lags=40, title_prefix=""):
     Plot ACF and PACF side by side
     """
     fig, axes = plt.subplots(1, 2, figsize=(12, 4))
-    
+
     plot_acf(series, lags=lags, ax=axes[0])
     axes[0].set_title(f"{title_prefix} ACF")
 
@@ -84,7 +84,7 @@ def plot_qq_residuals(model, title="Q–Q Plot of Residuals"):
 
 
 def plot_leverage_cooks(model, title="Influence Plot"):
-    
+
     fig, ax = plt.subplots(figsize=(8, 6))
     influence_plot(model, ax=ax)
     plt.title(title)
@@ -95,10 +95,10 @@ def run_heteroskedasticity_tests(model):
     from statsmodels.stats.diagnostic import het_breuschpagan, het_white
     residuals = model.resid
     exog = model.model.exog
-    
+
     bp_test = het_breuschpagan(residuals, exog)
     white_test = het_white(residuals, exog)
-    
+
     return {
         "Breusch-Pagan": {
             "LM Stat": bp_test[0],

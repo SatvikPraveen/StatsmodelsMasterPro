@@ -1,7 +1,6 @@
 # utils/mixed_effects_utils.py
 
 from statsmodels.formula.api import mixedlm
-import pandas as pd
 from pathlib import Path
 
 def fit_mixed_model(df, formula, groups_col, reml=True):

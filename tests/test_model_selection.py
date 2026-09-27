@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import pytest
-import statsmodels.api as sm
 import statsmodels.formula.api as smf
 
 from utils import model_selection as ms
